@@ -42,11 +42,13 @@ INSTALLED_APPS = [
     "rest_framework",
     "drf_spectacular",
     "django_filters",
+    "corsheaders",
 ]
 
 AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -154,3 +156,5 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Task Manager with DRF + React",
     "VERSION": "1.0.0",
 }
+
+CORS_ALLOW_ALL_ORIGINS = True

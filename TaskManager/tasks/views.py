@@ -7,13 +7,14 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from .permissions import IsOwner
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class=TaskSerializer
     filter_backends=[DjangoFilterBackend, SearchFilter, OrderingFilter]
-    permission_classes=[IsOwner]
+    permission_classes=[IsAuthenticated]
     filterset_fields=["status"]
     search_fields=["title", "description"]
     ordering_fields=["created_at", "updated_at", "deadline"]
