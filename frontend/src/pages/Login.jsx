@@ -1,57 +1,143 @@
 import { useState } from "react";
 import { login } from "../services/authService";
 import { useNavigate } from "react-router-dom";
+import AuthLayout from "../layouts/AuthLayout";
 
 function Login() {
-    const [username, setUsername]=useState("");
-    const [password, setPassword]=useState("");
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
 
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    console.log("1. submit");
+        setErrors({});
 
-    try {
-        console.log("2. before login");
+        if (!username.trim()) {
+            setErrors({
+                username: ["Username is required."]
+            });
+            return;
+        }
 
-        const data = await login(username, password);
+        if (!password.trim()) {
+            setErrors({
+                password: ["Password is required."]
+            });
+            return;
+        }
 
-        console.log("3. login success", data);
+        setLoading(true);
 
-        localStorage.setItem("access", data.access);
-        localStorage.setItem("refresh", data.refresh);
+        try {
+            const data = await login(username, password);
 
-        console.log("4. saved");
+            localStorage.setItem("access", data.access);
+            localStorage.setItem("refresh", data.refresh);
+            
+            navigate("/");
+        } catch (error) {
 
-        navigate("/");
-    } catch (error) {
-        console.log("ERROR:", error);
-        console.log("RESPONSE:", error.response);
-    }
-};
+            if (error.response?.data) {
+                setErrors(error.response.data);
+            } else {
+                setErrors({
+                    detail: ["Something went wrong."]
+                });
+            }
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
+        <AuthLayout
+            title="Welcome Back"
+            subtitle="Login to continue managing your tasks."
+            footerText="Don't have an account?"
+            footerLink="/register"
+            footerLinkText="Register"
+        >
+            <form onSubmit={handleSubmit}>
 
-            <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-            />
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="
+                        w-full
+                        border
+                        rounded-lg
+                        px-4
+                        py-3
+                        mb-4
+                        focus:outline-none
+                        focus:ring-2
+                        focus:ring-blue-500
+                    "
+                />
 
-            <button type="submit">
-                Login
-            </button>
-        </form>
+                {errors.username && (
+                    <p className="text-red-500 text-sm mb-3">
+                        {errors.username[0]}
+                    </p>
+                )}
+
+                <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="
+                        w-full
+                        border
+                        rounded-lg
+                        px-4
+                        py-3
+                        mb-4
+                        focus:outline-none
+                        focus:ring-2
+                        focus:ring-blue-500
+                    "
+                />
+
+                {errors.password && (
+                    <p className="text-red-500 text-sm mb-3">
+                        {errors.password[0]}
+                    </p>
+                )}
+
+                {errors.detail && (
+                    <p className="text-red-500 text-sm mb-4">
+                        {errors.detail}
+                    </p>
+                )}
+
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className={`
+                        w-full
+                        py-3
+                        rounded-lg
+                        text-white
+                        transition
+                        ${
+                            loading
+                                ? "bg-blue-400 cursor-not-allowed"
+                                : "bg-blue-600 hover:bg-blue-700"
+                        }
+                    `}
+                >
+                    {loading ? "Logging in..." : "Login"}
+                </button>
+
+            </form>
+        </AuthLayout>
     );
 }
 

@@ -9,7 +9,7 @@ class TaskSerializer(serializers.ModelSerializer):
             "title",
             "description",
             "status",
-            "daedline",
+            "deadline",
             "created_at",
             "updated_at",
         )

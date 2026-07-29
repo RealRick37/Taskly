@@ -1,19 +1,18 @@
-function TaskList({ tasks, onDelete }) {
-    return (
-        <>
-            {tasks.map(task => (
-                <div key={task.id}>
-                    <h3>{task.title}</h3>
-                    <p>{task.description}</p>
+import TaskCard from "./TaskCard";
 
-                    <button
-                        onClick={() => onDelete(task.id)}
-                    >
-                        Delete
-                    </button>
-                </div>
+function TaskList({ tasks, onDelete, onComplete, onEdit }) {
+    return (
+        <div className="space-y-4">
+            {tasks.map((task) => (
+                <TaskCard
+                    key={task.id}
+                    task={task}
+                    onDelete={onDelete}
+                    onComplete={onComplete}
+                    onEdit={onEdit}
+                />
             ))}
-        </>
+        </div>
     );
 }
 

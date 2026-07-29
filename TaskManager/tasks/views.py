@@ -14,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 class TaskViewSet(viewsets.ModelViewSet):
     serializer_class=TaskSerializer
     filter_backends=[DjangoFilterBackend, SearchFilter, OrderingFilter]
-    permission_classes=[IsAuthenticated]
+    permission_classes=[IsAuthenticated, IsOwner]
     filterset_fields=["status"]
     search_fields=["title", "description"]
     ordering_fields=["created_at", "updated_at", "deadline"]
