@@ -7,6 +7,24 @@ import {
 
 function TaskCard({ task, onDelete, onComplete, onEdit }) {
 
+    const getDeadlineColor = (deadline) => {
+        if (!deadline) return "text-gray-500";
+
+        const now = new Date();
+        const date = new Date(deadline);
+
+        if (date < now)
+            return "text-red-500";
+
+        const hours =
+            (date - now) / (1000 * 60 * 60);
+
+        if (hours < 24)
+            return "text-orange-500";
+
+        return "text-gray-500";
+    };
+
     const statusStyles = {
         todo: "bg-yellow-100 text-yellow-700",
         in_progress: "bg-blue-100 text-blue-700",
@@ -17,6 +35,12 @@ function TaskCard({ task, onDelete, onComplete, onEdit }) {
         todo: "To Do",
         in_progress: "In Progress",
         done: "Done",
+    };
+
+    const formatDeadline = (deadline) => {
+        if (!deadline) return "No deadline";
+
+        return new Date(deadline).toLocaleString();
     };
 
     return (
@@ -45,14 +69,14 @@ function TaskCard({ task, onDelete, onComplete, onEdit }) {
             </div>
 
             {task.deadline && (
-                <div className="flex items-center gap-2 mt-5 text-sm text-slate-500">
-
+                <div
+                    className={`flex items-center gap-2 mt-5 text-sm ${getDeadlineColor(task.deadline)}`}
+                >
                     <CalendarDays size={16} />
 
                     <span>
-                        {new Date(task.deadline).toLocaleDateString()}
+                        {formatDeadline(task.deadline)}
                     </span>
-
                 </div>
             )}
 
@@ -66,13 +90,23 @@ function TaskCard({ task, onDelete, onComplete, onEdit }) {
                     Edit
                 </button>
 
-                <button
-                    onClick={() => onComplete(task.id)}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600 text-white transition"
-                >
-                    <Check size={18} />
-                    Done
-                </button>
+                {
+                task.status !== "done" && (
+                    <button
+                        onClick={() => onComplete(task.id)}
+                        className="
+                            bg-green-500
+                            hover:bg-green-600
+                            text-white
+                            px-4
+                            py-2
+                            rounded-lg
+                        "
+                    >
+                        Done
+                    </button>
+                )
+            }
 
                 <button
                     onClick={() => onDelete(task.id)}

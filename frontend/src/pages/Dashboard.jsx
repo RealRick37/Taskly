@@ -8,6 +8,7 @@ import SortSelect from "../components/dashboard/SortSelect";
 import { getTasks, createTask, deleteTask, completeTask, updateTask } from "../services/taskService";
 import Navbar from "../components/Navbar";
 import { toast } from "react-toastify";
+import ConfirmModal from "../components/ConfirmModal";
 
 function Dashboard() {
     const [tasks, setTasks] = useState([]);
@@ -15,6 +16,8 @@ function Dashboard() {
     const [search, setSearch] = useState("");
     const [status, setStatus] = useState("");
     const [ordering, setOrdering] = useState("-created_at");
+    const [deleteTaskId, setDeleteTaskId] = useState(null);
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
     fetchTasks();
@@ -48,18 +51,25 @@ function Dashboard() {
         }
     };
 
-    const deleteTaskHandler = async (id) => {
-        try {
-            await deleteTask(id);
+    const openDeleteModal = (id) => {
+        setDeleteTaskId(id);
+    };
 
-            toast.success("Task deleted.");
+    const confirmDelete = async () => {
+        try {
+            await deleteTask(deleteTaskId);
 
             setTasks((prev) =>
-                prev.filter((task) => task.id !== id)
+                prev.filter(task => task.id !== deleteTaskId)
             );
+            
+            toast.success("Task deleted.");
+            setDeleteTaskId(null);
+
         } catch (error) {
-            console.log(error);
             toast.error("Failed to delete task.");
+        } finally {
+            setDeleting(false);
         }
     };
 
@@ -140,9 +150,17 @@ function Dashboard() {
                     </div>
                     <TaskList
                         tasks={tasks}
-                        onDelete={deleteTaskHandler}
+                        onDelete={openDeleteModal}
                         onComplete={completeTaskHandler}
                         onEdit={setEditingTask}
+                    />
+
+                    <ConfirmModal
+                        open={deleteTaskId !== null}
+                        title="Delete Task"
+                        message="Are you sure you want to delete this task?"
+                        onConfirm={confirmDelete}
+                        onCancel={() => setDeleteTaskId(null)}
                     />
                 </div>
 

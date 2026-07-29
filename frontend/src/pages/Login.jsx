@@ -3,6 +3,7 @@ import { login } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
 import { toast } from "react-toastify";
+import { Navigate } from "react-router-dom";
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -11,6 +12,10 @@ function Login() {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    if (localStorage.getItem("access")) {
+        return <Navigate to="/" replace />;
+}
 
     const handleSubmit = async (e) => {
         e.preventDefault();

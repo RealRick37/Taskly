@@ -3,14 +3,21 @@ import { useEffect, useState } from "react";
 function TaskForm({ onSubmit, initialData }) {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [deadline, setDeadline] = useState("");
+    const [status, setStatus] = useState("todo");
 
     useEffect(() => {
         if (initialData) {
             setTitle(initialData.title);
             setDescription(initialData.description);
+            setDeadline(initialData?.deadline ? initialData.deadline.slice(0,16): "");
+            setStatus(initialData?.status || "todo");
+        
         } else {
             setTitle("");
             setDescription("");
+            setDeadline("");
+            setStatus("todo");
         }
     }, [initialData]);
 
@@ -20,6 +27,8 @@ function TaskForm({ onSubmit, initialData }) {
         onSubmit({
             title,
             description,
+            deadline: deadline || null,
+            status: status || "todo",
         });
 
         setTitle("");
@@ -51,6 +60,40 @@ function TaskForm({ onSubmit, initialData }) {
                     placeholder="Description..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
+                />
+
+                <select
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+                    className="
+                        w-full
+                        border
+                        rounded-lg
+                        px-4
+                        py-3
+                        mb-4
+                        focus:outline-none
+                        focus:ring-2
+                        focus:ring-blue-500
+                    "
+                >
+                    <option value="todo">To Do</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+
+                <input
+                    type="datetime-local"
+                    value={deadline}
+                    onChange={(e) => setDeadline(e.target.value)}
+                    className="
+                        w-full
+                        border
+                        rounded-lg
+                        px-4
+                        py-3
+                        mb-4
+                    "
                 />
 
                 <button
