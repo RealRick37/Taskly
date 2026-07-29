@@ -7,6 +7,7 @@ import StatusFilter from "../components/dashboard/StatusFilter";
 import SortSelect from "../components/dashboard/SortSelect";
 import { getTasks, createTask, deleteTask, completeTask, updateTask } from "../services/taskService";
 import Navbar from "../components/Navbar";
+import { toast } from "react-toastify";
 
 function Dashboard() {
     const [tasks, setTasks] = useState([]);
@@ -30,6 +31,7 @@ function Dashboard() {
             setTasks(data);
         } catch (error) {
             console.log(error);
+            toast.error("Couldn't load tasks.");
         }
     };
 
@@ -37,9 +39,12 @@ function Dashboard() {
         try {
             const newTask = await createTask(task);
 
+            toast.success("Task created.");
+
             setTasks((prev) => [newTask, ...prev]);
         } catch (error) {
             console.log(error);
+            toast.error("Failed to create task.");
         }
     };
 
@@ -47,17 +52,22 @@ function Dashboard() {
         try {
             await deleteTask(id);
 
+            toast.success("Task deleted.");
+
             setTasks((prev) =>
                 prev.filter((task) => task.id !== id)
             );
         } catch (error) {
             console.log(error);
+            toast.error("Failed to delete task.");
         }
     };
 
     const completeTaskHandler = async (id) => {
         try {
             const updatedTask = await completeTask(id);
+
+            toast.success("Task completed.");
 
             setTasks((prev) =>
                 prev.map((task) =>
@@ -66,12 +76,15 @@ function Dashboard() {
             );
         } catch (error) {
             console.log(error);
+            toast.error("Failed to complete task.");
         }
     };
 
     const updateTaskHandler = async (taskData) => {
         try {
             const updatedTask = await updateTask(editingTask.id, taskData);
+
+            toast.success("Task updated.");
 
             setTasks((prev) =>
                 prev.map((task) =>
@@ -82,6 +95,7 @@ function Dashboard() {
             setEditingTask(null);
         } catch (error) {
             console.log(error);
+            toast.error("Something went wrong.");
         }
     };
 

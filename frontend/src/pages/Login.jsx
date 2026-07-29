@@ -2,6 +2,7 @@ import { useState } from "react";
 import { login } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
+import { toast } from "react-toastify";
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -17,16 +18,12 @@ function Login() {
         setErrors({});
 
         if (!username.trim()) {
-            setErrors({
-                username: ["Username is required."]
-            });
+            toast.error("Username is required.");
             return;
         }
 
         if (!password.trim()) {
-            setErrors({
-                password: ["Password is required."]
-            });
+            toast.error("Password is required.");
             return;
         }
 
@@ -38,16 +35,19 @@ function Login() {
             localStorage.setItem("access", data.access);
             localStorage.setItem("refresh", data.refresh);
             
+            toast.success("Welcome back!");
             navigate("/");
         } catch (error) {
 
-            if (error.response?.data) {
-                setErrors(error.response.data);
+            if (error.response?.status === 401) {
+                // setErrors(error.response.data);
+                toast.error("Invalid username or password.");
+            } else if (error.response?.status === 400) {
+                toast.error("Please check your input.");
             } else {
-                setErrors({
-                    detail: ["Something went wrong."]
-                });
+                toast.error("Something went wrong.");
             }
+
         } finally {
             setLoading(false);
         }

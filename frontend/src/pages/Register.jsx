@@ -2,6 +2,7 @@ import { useState } from "react";
 import { register } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
+import { toast } from "react-toastify";
 
 function Register() {
     const [username, setUsername]=useState("");
@@ -10,6 +11,12 @@ function Register() {
     const [confirmPassword, setConfirmPassword]=useState("");
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
+    const clearError = (field) => {
+            setErrors(prev => ({
+                ...prev,
+                [field]: undefined,
+            }));
+        };
 
     const navigate=useNavigate();
 
@@ -50,12 +57,15 @@ function Register() {
 
     try {
         await register(username, email, password);
-
+        
+        toast.success("Account created successfully!");
         navigate("/login");
     }
     catch (error) {
-        if (error.response?.data) {
+        if (error.response?.status === 400) {
             setErrors(error.response.data);
+        } else {
+            toast.error("Something went wrong.");
         }
     }
 
@@ -76,7 +86,7 @@ function Register() {
                 <input
                      type="text"
                         value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        onChange={(e) => {setUsername(e.target.value); clearError("username"); }}
                         placeholder="Username"
                         className="
                         w-full
@@ -102,7 +112,7 @@ function Register() {
                 <input
                     type="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {setEmail(e.target.value); clearError("email");}}
                     placeholder="Email"
                     className="
                         w-full
@@ -128,7 +138,7 @@ function Register() {
                 <input
                      type="password"
                         value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        onChange={(e) => {setPassword(e.target.value); clearError("password");}}
                         placeholder="Password"
                     className="
                         w-full
@@ -155,7 +165,7 @@ function Register() {
                     type="password"
                     placeholder="Confirm Password"
                     value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    onChange={(e) => {setConfirmPassword(e.target.value); clearError("confirmPassword");}}
                     className="
                         w-full
                         border
