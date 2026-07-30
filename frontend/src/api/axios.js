@@ -20,6 +20,13 @@ api.interceptors.response.use(
     async (error) => {
         const originalRequest = error.config;
         const url = originalRequest.url || "";
+
+        if (
+            error.response?.status === 401 &&
+            !originalRequest._retry &&
+            !url.includes("accounts/login") &&
+            !url.includes("accounts/refresh")
+        )
  
         if (
             error.response?.status === 401 &&
@@ -31,6 +38,10 @@ api.interceptors.response.use(
 
             try {
                 const refresh = localStorage.getItem("refresh");
+                
+                if (!refresh) {
+                    return Promise.reject(error);
+                }
 
                 const response = await axios.post(
                     "http://127.0.0.1:8000/api/accounts/refresh/",
