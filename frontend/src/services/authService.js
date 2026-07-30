@@ -17,3 +17,8 @@ export const login=async (username, password) => {
 
     return response.data;
 };
+
+export const getMe = async () => {
+    const response = await api.get("accounts/me/");
+    return response.data;
+};

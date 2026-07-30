@@ -10,6 +10,7 @@ import Navbar from "../components/Navbar";
 import { toast } from "react-toastify";
 import ConfirmModal from "../components/ConfirmModal";
 import { Loader2 } from "lucide-react";
+import { getMe } from "../services/authService";
 
 function Dashboard() {
     const [tasks, setTasks] = useState([]);
@@ -20,6 +21,7 @@ function Dashboard() {
     const [deleteTaskId, setDeleteTaskId] = useState(null);
     const [deleting, setDeleting] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
     fetchTasks();
@@ -34,6 +36,9 @@ function Dashboard() {
                 status,
                 ordering,
             });
+
+            const me = await getMe();
+            setUser(me);
 
             setTasks(data);
         } catch (error) {
@@ -116,15 +121,15 @@ function Dashboard() {
     };
 
     return (
-    <div className="min-h-screen bg-slate-100">
-        <Navbar />
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-indigo-100">
+        <Navbar user={user} />
 
         <div
             className="
                 max-w-7xl
                 mx-auto
                 px-4
-                sm:px-6
+                sm:px-6 
                 lg:px-8
                 py-6
             "
