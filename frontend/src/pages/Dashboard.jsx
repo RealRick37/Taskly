@@ -9,6 +9,7 @@ import { getTasks, createTask, deleteTask, completeTask, updateTask } from "../s
 import Navbar from "../components/Navbar";
 import { toast } from "react-toastify";
 import ConfirmModal from "../components/ConfirmModal";
+import { Loader2 } from "lucide-react";
 
 function Dashboard() {
     const [tasks, setTasks] = useState([]);
@@ -18,12 +19,15 @@ function Dashboard() {
     const [ordering, setOrdering] = useState("-created_at");
     const [deleteTaskId, setDeleteTaskId] = useState(null);
     const [deleting, setDeleting] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
     fetchTasks();
     }, [search, status, ordering]);
 
     const fetchTasks = async () => {
+        setLoading(true);
+
         try {
             const data = await getTasks({
                 search,
@@ -35,6 +39,8 @@ function Dashboard() {
         } catch (error) {
             console.log(error);
             toast.error("Couldn't load tasks.");
+        } finally {
+        setLoading(false);
         }
     };
 
@@ -148,12 +154,19 @@ function Dashboard() {
                         />
 
                     </div>
-                    <TaskList
-                        tasks={tasks}
-                        onDelete={openDeleteModal}
-                        onComplete={completeTaskHandler}
-                        onEdit={setEditingTask}
-                    />
+                    {loading ? (
+                        <div className="flex justify-center items-center py-16">
+                            <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+                        </div>
+                        
+                    ) : (
+                        <TaskList
+                            tasks={tasks}
+                            onDelete={openDeleteModal}
+                            onComplete={completeTaskHandler}
+                            onEdit={setEditingTask}
+                        />
+                    )}
 
                     <ConfirmModal
                         open={deleteTaskId !== null}
