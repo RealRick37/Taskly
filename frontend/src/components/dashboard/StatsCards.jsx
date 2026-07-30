@@ -40,7 +40,16 @@ function StatsCards({ tasks }) {
     ];
 
     return (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+        <div
+            className="
+                grid
+                grid-cols-1
+                sm:grid-cols-2
+                xl:grid-cols-4
+                gap-5
+                mb-8
+            "
+        >
 
             {cards.map((card) => {
                 const Icon = card.icon;
@@ -48,7 +57,17 @@ function StatsCards({ tasks }) {
                 return (
                     <div
                         key={card.title}
-                        className="bg-white rounded-2xl shadow p-5 flex justify-between items-center"
+                        className="
+                            bg-white
+                            rounded-2xl
+                            shadow
+                            p-5
+                            flex
+                            justify-between
+                            items-center
+                            hover:shadow-lg
+                            transition
+                            "
                     >
 
                         <div>

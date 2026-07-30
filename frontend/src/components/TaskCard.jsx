@@ -46,7 +46,13 @@ function TaskCard({ task, onDelete, onComplete, onEdit }) {
     return (
         <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition duration-300 p-6">
 
-            <div className="flex justify-between items-start">
+            <div className="
+                    flex
+                    flex-col
+                    sm:flex-row
+                    justify-between
+                    gap-4
+                    ">
 
                 <div className="space-y-2">
 
@@ -61,7 +67,7 @@ function TaskCard({ task, onDelete, onComplete, onEdit }) {
                 </div>
 
                 <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${statusStyles[task.status]}`}
+                    className={`px-3 py-1 self-start rounded-full text-sm font-medium ${statusStyles[task.status]}`}
                 >
                     {statusText[task.status]}
                 </span>
@@ -80,11 +86,16 @@ function TaskCard({ task, onDelete, onComplete, onEdit }) {
                 </div>
             )}
 
-            <div className="flex gap-3 mt-6">
+            <div className="flex
+                flex-col
+                sm:flex-row
+                gap-2
+                sm:gap-3
+                mt-6">
 
                 <button
                     onClick={() => onEdit(task)}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition"
+                    className="flex items-center justify-center w-full sm:w-auto gap-2 px-4 py-2 rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition"
                 >
                     <Pencil size={18} />
                     Edit
@@ -101,6 +112,9 @@ function TaskCard({ task, onDelete, onComplete, onEdit }) {
                             px-4
                             py-2
                             rounded-lg
+                            justify-center
+                            w-full
+                            sm:w-auto
                         "
                     >
                         Done
@@ -110,7 +124,7 @@ function TaskCard({ task, onDelete, onComplete, onEdit }) {
 
                 <button
                     onClick={() => onDelete(task.id)}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white transition"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg justify-center w-full sm:w-auto bg-red-500 hover:bg-red-600 text-white transition"
                 >
                     <Trash2 size={18} />
                     Delete

@@ -7,6 +7,8 @@ function SortSelect({ value, onChange }) {
                 rounded-xl
                 border
                 bg-white
+                w-full
+                md:w-auto
                 px-4
                 py-3
                 shadow

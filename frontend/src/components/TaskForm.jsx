@@ -36,7 +36,7 @@ function TaskForm({ onSubmit, initialData }) {
     };
 
     return (
-        <div className="bg-white rounded-xl shadow p-6">
+        <div className="bg-white rounded-xl shadow p-5 sm:p-6">
 
             <h2 className="text-xl font-bold mb-5">
                 {initialData ? "Edit Task" : "Create Task"}
@@ -56,7 +56,7 @@ function TaskForm({ onSubmit, initialData }) {
                 />
 
                 <textarea
-                    className="w-full border rounded-lg px-4 py-2 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full border rounded-lg px-4 py-2 h-28 sm:h-32 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Description..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
@@ -97,7 +97,7 @@ function TaskForm({ onSubmit, initialData }) {
                 />
 
                 <button
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 sm:py-3 rounded-lg font-semibold transition"
                     type="submit"
                 >
                     {initialData ? "Update Task" : "Create Task"}

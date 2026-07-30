@@ -6,7 +6,7 @@ function SearchBar({ value, onChange }) {
 
             <Search
                 size={20}
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-gray-400"
             />
 
             <input
@@ -19,9 +19,11 @@ function SearchBar({ value, onChange }) {
                     rounded-xl
                     border
                     bg-white
-                    pl-12
+                    pl-10 sm:pl-12
                     pr-4
                     py-3
+                    text-sm
+                    sm:text-base
                     shadow
                     focus:outline-none
                     focus:ring-2

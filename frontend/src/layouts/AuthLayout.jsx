@@ -4,15 +4,15 @@ function AuthLayout({ title, subtitle, children, footerText, footerLink, footerL
     return (
         <div className="min-h-screen bg-slate-100 flex items-center justify-center p-6">
 
-            <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+            <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-6 sm:p-8">
 
                 <div className="text-center mb-8">
 
-                    <h1 className="text-3xl font-bold text-slate-800">
+                    <h1 className="text-2xl sm:text-3xl font-bold text-slate-800">
                         Task Manager
                     </h1>
 
-                    <p className="text-slate-500 mt-2">
+                    <p className="text-slate-500 mt-2 text-sm sm:text-base">
                         {subtitle}
                     </p>
 

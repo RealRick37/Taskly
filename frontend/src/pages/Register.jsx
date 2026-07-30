@@ -93,7 +93,7 @@ function Register() {
                         border
                         rounded-lg
                         px-4
-                        py-3
+                        py-2.5 sm:py-3
                         mb-4
                         focus:outline-none
                         focus:ring-2
@@ -119,7 +119,7 @@ function Register() {
                         border
                         rounded-lg
                         px-4
-                        py-3
+                        py-2.5 sm:py-3
                         mb-4
                         focus:outline-none
                         focus:ring-2
@@ -145,7 +145,7 @@ function Register() {
                         border
                         rounded-lg
                         px-4
-                        py-3
+                        py-2.5 sm:py-3
                         mb-4
                         focus:outline-none
                         focus:ring-2
@@ -171,7 +171,7 @@ function Register() {
                         border
                         rounded-lg
                         px-4
-                        py-3
+                        py-2.5 sm:py-3
                         mb-4
                         focus:outline-none
                         focus:ring-2

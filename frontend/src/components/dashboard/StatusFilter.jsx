@@ -5,6 +5,8 @@ function StatusFilter({ value, onChange }) {
             value={value}
             onChange={(e) => onChange(e.target.value)}
             className="
+                w-full
+                md:w-auto
                 rounded-xl
                 border
                 bg-white
@@ -14,7 +16,7 @@ function StatusFilter({ value, onChange }) {
                 focus:outline-none
                 focus:ring-2
                 focus:ring-blue-500
-            "
+                "
         >
             <option value="">All</option>
             <option value="todo">Todo</option>
