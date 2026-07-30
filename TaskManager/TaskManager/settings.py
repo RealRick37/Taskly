@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure--912p=6#gn9d3668@4w%kf5v0t40#xe-k3%8r__4vbhz8w_19_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  config("DEBUG", default=True)
 
 ALLOWED_HOSTS = []
 
@@ -81,14 +82,14 @@ WSGI_APPLICATION = 'TaskManager.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+DATABASES =  {
+    "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "task_manager",
-        "USER": "postgres",
-        "PASSWORD": "ali88664",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "NAME": config("DB_NAME"),
+        "USER": config("DB_USER"),
+        "PASSWORD": config("DB_PASSWORD"),
+        "HOST": config("DB_HOST"),
+        "PORT": config("DB_PORT"),
     }
 }
 
