@@ -1,5 +1,3 @@
-# Taskly
-
 <p align="center">
   <img src="taskly.png" width="180" alt="Taskly Logo">
 </p>
