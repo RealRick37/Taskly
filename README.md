@@ -10,6 +10,18 @@
 
 ---
 
+# Screenshots
+
+## Dashboard
+
+![Dashboard](screenshots/dashboard.png)
+![Dashboard](screenshots/dashboard2.png)
+
+## Empty State
+![Empty State](screenshots/empty-state.png)
+
+---
+
 ## Features
 
 - JWT Authentication
