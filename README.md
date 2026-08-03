@@ -10,6 +10,18 @@
 
 ---
 
+## Live Demo
+
+Frontend
+
+https://taskly-rick-514a.vercel.app
+
+Backend
+
+https://taskly-py8t.onrender.com/api/docs/
+
+---
+
 # Screenshots
 
 ## Dashboard
