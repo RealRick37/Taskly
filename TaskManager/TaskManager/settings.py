@@ -167,4 +167,5 @@ SPECTACULAR_SETTINGS = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "https://taskly-beta-pink.vercel.app",
 ]
