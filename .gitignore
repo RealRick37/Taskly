@@ -1,0 +1,37 @@
+# Python
+
+
+__pycache__/
+*.py[cod]
+*.pyo
+
+.env
+
+env/
+venv/
+.venv/
+
+# Django
+
+TaskManager/staticfiles/
+media/
+
+
+# React
+
+frontend/node_modules/
+frontend/dist/
+
+frontend/.env
+frontend/.env.production
+
+
+# VSCode
+
+.vscode/
+.idea/
+
+# OS
+
+.DS_Store
+Thumbs.db
